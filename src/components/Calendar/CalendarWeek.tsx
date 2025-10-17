@@ -7,7 +7,7 @@ export default function CalendarWeek({ className, ...props }: TCalendarWeek) {
   return (
     <header
       {...props}
-      className={twMerge("grid grid-cols-7 gap-4", className)}
+      className={twMerge("grid grid-cols-7 gap-2", className)}
     />
   )
 }

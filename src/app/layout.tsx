@@ -1,3 +1,6 @@
+import { Message } from "@/components/Message"
+import { MessagesProvider } from "@/contexts/MessagesContext"
+import { UserProvider } from "@/contexts/UserContext"
 import type { Metadata } from "next"
 import { Roboto_Slab, SUSE } from "next/font/google"
 import "./globals.css"
@@ -27,7 +30,12 @@ export default function RootLayout({
       <body
         className={`${suseMono.variable} ${robotoSlab.variable} antialiased`}
       >
-        {children}
+        <UserProvider>
+          <MessagesProvider>
+            <Message.Default />
+            <div className="flex flex-col min-h-screen">{children}</div>
+          </MessagesProvider>
+        </UserProvider>
       </body>
     </html>
   )

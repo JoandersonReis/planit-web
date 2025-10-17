@@ -19,6 +19,17 @@
 
   --font-text: var(--font-suse-mono);
   --font-title: var(--font-slab-mono);
+
+  --animate-loading-bar: loading-bar 5s ease-in-out forwards;
+
+  @keyframes loading-bar {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
 }
 
 body {
@@ -27,7 +38,6 @@ body {
 }
 
 * {
-  border: 0;
   margin: 0;
   box-sizing: border-box;
   outline: 0;

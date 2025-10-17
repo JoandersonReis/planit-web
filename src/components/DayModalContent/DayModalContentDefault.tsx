@@ -11,13 +11,15 @@ type TDayModalContentDefaultProps = {
 export default function DayModalContentDefault({
   data,
 }: TDayModalContentDefaultProps) {
+  const currentDate = new Date(data.date)
+
   return (
     <DayModalContent.Root>
       <DayModalContent.Content>
         <div>
           <DayModalContent.Title>
-            {data.date.getDate()} {MONTHS[data.date.getMonth()].nome}{" "}
-            {data.date.getFullYear()}
+            {currentDate.getDate()} {MONTHS[currentDate.getMonth()].nome}{" "}
+            {currentDate.getFullYear()}
           </DayModalContent.Title>
           <DayModalContent.Description>
             Veja suas pendências do dia!

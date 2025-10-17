@@ -1,55 +1,49 @@
-import { Calendar } from "@/components/Calendar"
-import { TDayData } from "@/service/types"
-import { randomUUID } from "crypto"
-import { ComponentProps } from "react"
+"use client"
+
+import { Dashboard } from "@/components/Dashboard"
+import { StatisticsService } from "@/service/Statistics"
+import { TStatisticsResponse } from "@/service/types"
+import { MONTH_SELECT } from "@/utils/Config"
+import { ComponentProps, useEffect, useState } from "react"
 
 type Tpage = ComponentProps<"div">
 
 export default function Page({ className, ...props }: Tpage) {
-  const calendarDaysData: TDayData[] = [
-    {
-      date: new Date("10-01-2025"),
-      debts: [
-        {
-          commit: new Date("10-01-2025"),
-          id: randomUUID(),
-          paid: false,
-          title: "Fatura Nubank",
-          value: "220000",
-        },
-        {
-          commit: new Date("10-01-2025"),
-          id: randomUUID(),
-          paid: false,
-          title: "Água",
-          value: "4425",
-        },
-      ],
-    },
-    {
-      date: new Date("10-03-2025"),
-      debts: [
-        {
-          commit: new Date("10-03-2025"),
-          id: randomUUID(),
-          paid: true,
-          title: "Empréstimo",
-          value: "45000",
-        },
-        {
-          commit: new Date("10-03-2025"),
-          id: randomUUID(),
-          paid: false,
-          title: "Gás",
-          value: "12000",
-        },
-      ],
-    },
-  ]
+  const currentDate = new Date()
+  const [monthSelect, setMonthSelected] = useState<string>(
+    MONTH_SELECT[currentDate.getMonth()].value
+  )
+  var [statistics, setStatistics] = useState<TStatisticsResponse>()
+
+  const statisticsService = new StatisticsService()
+
+  async function loadStatistics() {
+    const response = await statisticsService.find(Number(monthSelect))
+
+    setStatistics(response)
+  }
+
+  useEffect(() => {
+    loadStatistics()
+  }, [monthSelect])
 
   return (
-    <div className="h-[100vh] flex-center">
-      <Calendar.Default calendarMonthData={calendarDaysData} />
+    <div className="h-[100vh] p-4 flex flex-col gap-4">
+      <Dashboard.CalendarCard
+        month={Number(monthSelect) - 1}
+        calendarDaysData={statistics?.debts.debtsDays}
+        value={monthSelect}
+        onChange={setMonthSelected}
+      />
+
+      <Dashboard.MonthBalanceCard
+        debtsTotal={statistics?.debts.debtsTotal || 0}
+      />
+
+      <Dashboard.MonthDebtsCard
+        debtsCount={statistics?.debts.debtsCount || 0}
+        debtsSumTotal={statistics?.debts.debtsTotal || 0}
+      />
     </div>
   )
 }

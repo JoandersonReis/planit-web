@@ -1,8 +1,10 @@
-export function CompareDate(date: Date, compare: Date): boolean {
+export function CompareDate(date: Date, compare: string): boolean {
+  const compareDate = new Date(compare)
+
   if (
-    date.getDate() === compare.getDate() &&
-    date.getMonth() === compare.getMonth() &&
-    date.getFullYear() === compare.getFullYear()
+    date.getDate() === compareDate.getDate() &&
+    date.getMonth() === compareDate.getMonth() &&
+    date.getFullYear() === compareDate.getFullYear()
   ) {
     return true
   }

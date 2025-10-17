@@ -5,21 +5,26 @@ import { CompareDate } from "@/utils/CompareDate"
 import { MONTHS } from "@/utils/Config"
 import { MountCalendarDays } from "@/utils/MountCalendarDays"
 import { TMonth } from "@/utils/types"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Calendar } from "."
 
 type TCalendarProps = {
-  calendarMonthData: TDayData[]
+  calendarMonthData?: TDayData[]
+  month: number
 }
 
-export default function CalendarDefault({ calendarMonthData }: TCalendarProps) {
+export default function CalendarDefault({
+  calendarMonthData,
+  month,
+}: TCalendarProps) {
   const week = ["D", "S", "T", "Q", "Q", "S", "S"]
-  const [months, setMonths] = useState<TMonth[]>(MONTHS)
-  const [monthSelected, setMonthSelected] = useState<TMonth>(
-    months.filter((item) => item.selected)[0]
-  )
+  const [monthSelected, setMonthSelected] = useState<TMonth>(MONTHS[month])
 
-  return (
+  useEffect(() => {
+    setMonthSelected(MONTHS[month])
+  }, [month])
+
+  return calendarMonthData ? (
     <Calendar.Root>
       <Calendar.Content>
         <Calendar.Week>
@@ -45,5 +50,7 @@ export default function CalendarDefault({ calendarMonthData }: TCalendarProps) {
         </Calendar.Days>
       </Calendar.Content>
     </Calendar.Root>
+  ) : (
+    <></>
   )
 }

@@ -1,4 +1,4 @@
-import { MONTHS } from "./Config"
+import { MONTHS } from "@/utils/Config"
 import { TMonth, TMonthFormated } from "./types"
 
 export function MountCalendarDays(monthSelected: TMonth): TMonthFormated[] {
@@ -6,10 +6,7 @@ export function MountCalendarDays(monthSelected: TMonth): TMonthFormated[] {
     { length: monthSelected.days },
     (item, index) => index + 1
   )
-  // const daysRest = Array.from(
-  //   { length: getPreviousMonth(monthSelected).days },
-  //   (item, index) => index + 1
-  // )
+
   const previusMonth = getPreviousMonth(monthSelected)
   const gridDays = Array.from({ length: 35 }, (item, index) => index + 1)
 

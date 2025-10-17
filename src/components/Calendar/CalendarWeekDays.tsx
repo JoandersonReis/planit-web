@@ -10,7 +10,7 @@ export default function CalendarWeekDays({
   return (
     <strong
       {...props}
-      className={twMerge("h-8 w-8 flex-center font-sans", className)}
+      className={twMerge("h-10 w-10 flex-center font-sans", className)}
     />
   )
 }
