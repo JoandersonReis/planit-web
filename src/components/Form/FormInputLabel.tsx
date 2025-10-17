@@ -29,7 +29,7 @@ export default function FormInputLabel({
           htmlFor={label}
           required={required}
           className={clsx(
-            "absolute group-focus-within:text-xs group-focus-within:border-2 group-focus-within:border-primary group-focus-within:top-[-12px] left-2 bg-dark-gray px-2 text-white/20 uppercase rounded-lg group-focus-within:text-white group-focus-within:px-4",
+            "absolute group-focus-within:text-xs bg-[#191d24] group-focus-within:top-[-8px] left-2 px-2 text-white/20 uppercase",
             {
               "top-[-8px] text-xs": value.length > 0,
             }

@@ -24,7 +24,7 @@ export default function CalendarDefault({
     setMonthSelected(MONTHS[month])
   }, [month])
 
-  return calendarMonthData ? (
+  return (
     <Calendar.Root>
       <Calendar.Content>
         <Calendar.Week>
@@ -34,23 +34,28 @@ export default function CalendarDefault({
             </Calendar.WeekDays>
           ))}
         </Calendar.Week>
-
-        <Calendar.Days>
-          {MountCalendarDays(monthSelected).map((item, index) => (
-            <Calendar.Day
-              data={calendarMonthData.find((calendar) =>
-                CompareDate(item.date, calendar.date)
-              )}
-              dayType={item.type}
-              key={index}
-            >
-              {item.date.getDate()}
-            </Calendar.Day>
-          ))}
-        </Calendar.Days>
+        {calendarMonthData ? (
+          <Calendar.Days>
+            {MountCalendarDays(monthSelected).map((item, index) => (
+              <Calendar.Day
+                data={calendarMonthData.find((calendar) =>
+                  CompareDate(
+                    item.date,
+                    calendar.date,
+                    calendar.debts.findIndex((debt) => debt.repeat) > -1
+                  )
+                )}
+                dayType={item.type}
+                key={index}
+              >
+                {item.date.getDate()}
+              </Calendar.Day>
+            ))}
+          </Calendar.Days>
+        ) : (
+          <Calendar.Loading />
+        )}
       </Calendar.Content>
     </Calendar.Root>
-  ) : (
-    <></>
   )
 }

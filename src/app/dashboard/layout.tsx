@@ -11,7 +11,7 @@ type TLayout = {
 export default async function RootLayout({ children }: TLayout) {
   const cookieStore = await cookies()
   const sessionData = JSON.parse(
-    String(cookieStore.get(CONFIG.COOKIES.SESSION)?.value)
+    String(cookieStore.get(CONFIG.COOKIES.SESSION)?.value || "{}")
   )
 
   if (!sessionData.refreshToken || !isTokenValid(sessionData.refreshToken)) {

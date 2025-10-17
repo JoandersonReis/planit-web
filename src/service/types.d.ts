@@ -4,6 +4,7 @@ export type TDebt = {
   title: string
   paid: boolean
   value: string
+  repeat: boolean
 }
 
 export type TDayData = {

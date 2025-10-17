@@ -7,9 +7,6 @@ export function MountCalendarDays(monthSelected: TMonth): TMonthFormated[] {
     (item, index) => index + 1
   )
 
-  const previusMonth = getPreviousMonth(monthSelected)
-  const gridDays = Array.from({ length: 35 }, (item, index) => index + 1)
-
   const date = new Date()
   date.setHours(0)
   date.setMinutes(0)
@@ -19,10 +16,22 @@ export function MountCalendarDays(monthSelected: TMonth): TMonthFormated[] {
 
   const firstDayWeek = date.getDay()
 
+  const previusMonth = getPreviousMonth(monthSelected)
+  const gridDaysLength = firstDayWeek + 1 + monthSelected.days
+  const gridDays = Array.from(
+    {
+      length: Math.ceil(gridDaysLength / 7) * 7,
+    },
+    (item, index) => index + 1
+  )
+
   const daysFormated: TMonthFormated[] = gridDays.map((item, index) => {
     var currentDate = new Date(date)
 
-    if (index >= firstDayWeek && index <= monthSelected.days + 1) {
+    if (
+      index >= firstDayWeek &&
+      index <= monthSelected.days + firstDayWeek - 1
+    ) {
       currentDate.setDate(item - firstDayWeek)
 
       return { date: currentDate, type: "MONTH" }
@@ -35,8 +44,8 @@ export function MountCalendarDays(monthSelected: TMonth): TMonthFormated[] {
       return { date: currentDate, type: "NOMONT" }
     }
 
-    currentDate.setMonth(currentDate.getMonth() - 1)
-    currentDate.setDate(item - firstDayWeek - 30)
+    currentDate.setMonth(currentDate.getMonth() + 1)
+    currentDate.setDate(item - firstDayWeek - monthSelected.days)
     return { date: currentDate, type: "NOMONT" }
   })
 
@@ -46,7 +55,7 @@ export function MountCalendarDays(monthSelected: TMonth): TMonthFormated[] {
 function getPreviousMonth(monthSelected: TMonth): TMonth {
   const previusMonth =
     monthSelected.month == 0
-      ? MONTHS[monthSelected.month - 1]
+      ? MONTHS[monthSelected.month]
       : MONTHS[MONTHS.length - 1]
 
   return previusMonth

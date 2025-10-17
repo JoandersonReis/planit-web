@@ -26,7 +26,7 @@ export default function CalendarDay({
               {...props}
               className={twMerge(
                 clsx(
-                  "!h-10 !w-10 rounded-lg flex-center font-sans after:content-[''] after:absolute after:h-[4px] after:w-[4px] after:rounded-2xl after:bg-white after:top-[5px] after:right-[5px]",
+                  "!h-10 !w-10 rounded-lg flex-center font-sans !bg-secondary",
                   {
                     "bg-primary": dayType == "MONTH",
                     "bg-black opacity-50": dayType == "NOMONT",

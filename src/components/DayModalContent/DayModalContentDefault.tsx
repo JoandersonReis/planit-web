@@ -1,6 +1,5 @@
 import { TDayData } from "@/service/types"
 import { MONTHS } from "@/utils/Config"
-import clsx from "clsx"
 import { BanknoteArrowDown } from "lucide-react"
 import { DayModalContent } from "."
 
@@ -38,13 +37,10 @@ export default function DayModalContentDefault({
           <DayModalContent.Items>
             {data.debts.map((item) => (
               <DayModalContent.Item
+                debtId={item.id}
                 value={item.value}
                 paid={item.paid}
                 key={item.id}
-                className={clsx({
-                  "bg-amber-800": !item.paid,
-                  "bg-emerald-500": item.paid,
-                })}
               >
                 <DayModalContent.ItemTitle>
                   {item.title}

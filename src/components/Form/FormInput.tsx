@@ -18,7 +18,7 @@ export default function FormInput({
       {...register(name)}
       {...props}
       className={twMerge(
-        "h-10 w-full outline-0 px-2 border-2 bg-dark-gray border-white/20 rounded-lg",
+        "h-10 w-full outline-0 px-2 border-2 bg-transaprent border-white/20 rounded-lg",
         className
       )}
     />
@@ -27,7 +27,7 @@ export default function FormInput({
       autoComplete="off"
       {...props}
       className={twMerge(
-        "h-10 w-full outline-0 px-2 border-2 bg-dark-gray border-white/20 rounded-lg",
+        "h-10 w-full outline-0 px-2 border-2 bg-transaprent border-white/20 rounded-lg",
         className
       )}
     />
