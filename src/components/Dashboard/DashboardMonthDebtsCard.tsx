@@ -1,4 +1,3 @@
-import { ConvertCentsToReal } from "@/utils/ConvertCentsToReal"
 import { BadgeDollarSign } from "lucide-react"
 import { ComponentProps } from "react"
 import { twMerge } from "tailwind-merge"
@@ -27,7 +26,7 @@ export default function DashboardMonthDebtsCard({
         </Card.Header>
 
         <strong className="text-3xl flex items-center gap-2 font-normal text-red-500">
-          {ConvertCentsToReal(String(debtsSumTotal))}
+          <Card.Counter duration={1000} end={debtsSumTotal} />
         </strong>
       </Card.Content>
     </Card.Root>

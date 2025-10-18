@@ -28,7 +28,7 @@ export default function Login() {
 
   return (
     <div className="flex-1 flex-center p-4">
-      <Card.Root>
+      <Card.Root className="max-w-[600px]">
         <LoginForm />
       </Card.Root>
     </div>

@@ -1,3 +1,4 @@
+import { Dashboard } from "@/components/Dashboard"
 import { isTokenValid } from "@/service/API"
 import { CONFIG } from "@/utils/Config"
 import { cookies } from "next/headers"
@@ -18,5 +19,11 @@ export default async function RootLayout({ children }: TLayout) {
     redirect("/login")
   }
 
-  return <div className="flex-1">{children}</div>
+  return (
+    <div className="flex-1 ">
+      <Dashboard.Header />
+
+      {children}
+    </div>
+  )
 }

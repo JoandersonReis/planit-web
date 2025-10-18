@@ -1,7 +1,12 @@
+"use client"
+
+import { useUserContext } from "@/contexts/UserContext"
 import { DebtsService } from "@/service/Debts"
+import { CONFIG } from "@/utils/Config"
 import { ConvertCentsToReal } from "@/utils/ConvertCentsToReal"
 import clsx from "clsx"
 import { ComponentProps, useState } from "react"
+import { useSWRConfig } from "swr"
 import { twMerge } from "tailwind-merge"
 import { DayModalContent } from "."
 
@@ -9,6 +14,7 @@ type TDayModalContentItem = ComponentProps<"div"> & {
   paid: boolean
   value: string
   debtId: string
+  monthSelected: number
 }
 
 export default function DayModalContentItem({
@@ -17,16 +23,21 @@ export default function DayModalContentItem({
   value,
   debtId,
   children,
+  monthSelected,
   ...props
 }: TDayModalContentItem) {
   const debtService = new DebtsService()
-  const [paidState, setPaidState] = useState(paid)
   const [show, setShow] = useState(false)
+  const { onDebtsPaidTotal, debtsPaidTotal } = useUserContext()
+  const { mutate } = useSWRConfig()
 
   async function handlePay() {
     await debtService.pay(debtId, !paid)
 
-    setPaidState((state) => !state)
+    onDebtsPaidTotal(
+      !paid ? debtsPaidTotal + Number(value) : debtsPaidTotal - Number(value)
+    )
+    await mutate([CONFIG.CACHE_KEYS.STATISTICS, monthSelected + 1])
   }
 
   return (
@@ -38,8 +49,8 @@ export default function DayModalContentItem({
           clsx(
             "flex items-center !justify-between p-2 rounded-lg w-full relative overflow-hidden cursor-pointer",
             {
-              "bg-amber-800": !paidState,
-              "bg-emerald-500": paidState,
+              "bg-amber-800": !paid,
+              "bg-emerald-500": paid,
             }
           ),
           className
@@ -53,15 +64,15 @@ export default function DayModalContentItem({
           className={clsx(
             "!w-full !h-full !absolute top-0 right-0 transition-all duration-300",
             {
-              "bg-emerald-800": !paidState,
-              "bg-amber-400": paidState,
+              "bg-emerald-800": !paid,
+              "bg-amber-400": paid,
               "translate-y-0": show,
               "translate-y-[100px]": !show,
             }
           )}
         >
           <DayModalContent.ItemTitle>
-            {paidState
+            {paid
               ? "Não foi pago?"
               : `Deseja pagar (${ConvertCentsToReal(value)})?`}
           </DayModalContent.ItemTitle>

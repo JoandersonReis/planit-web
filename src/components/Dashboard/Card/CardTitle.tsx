@@ -19,7 +19,7 @@ export default function CardTitle({
     <h2
       {...props}
       className={twMerge(
-        "text-lg tracking-[8px] font-thin flex gap-2 items-center",
+        "text-sm tracking-[8px] font-thin flex gap-2 items-center",
         className
       )}
     >

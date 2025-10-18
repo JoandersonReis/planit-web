@@ -9,11 +9,13 @@ import Modal from "../Modal"
 type TCalendarDay = ComponentProps<"button"> & {
   dayType: TDayEnum
   data?: TDayData | null
+  monthSelected: number
 }
 
 export default function CalendarDay({
   className,
   dayType,
+  monthSelected,
   data,
   ...props
 }: TCalendarDay) {
@@ -37,7 +39,7 @@ export default function CalendarDay({
             />
           }
         >
-          <DayModalContent.Default data={data} />
+          <DayModalContent.Default monthSelected={monthSelected} data={data} />
         </Modal>
       ) : (
         <button

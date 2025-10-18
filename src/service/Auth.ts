@@ -23,4 +23,14 @@ export default class AuthService {
 
     return response.data
   }
+
+  async logout(): Promise<boolean> {
+    try {
+      await api.patch("/user/logout")
+
+      return true
+    } catch (err) {
+      return false
+    }
+  }
 }

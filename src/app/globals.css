@@ -21,6 +21,7 @@
   --font-title: var(--font-slab-mono);
 
   --animate-loading-bar: loading-bar 5s ease-in-out forwards;
+  --animate-flicker: flicker 0.5s ease-in-out infinite alternate;
 
   @keyframes loading-bar {
     0% {
@@ -28,6 +29,17 @@
     }
     100% {
       width: 100%;
+    }
+  }
+
+  @keyframes flicker {
+    0% {
+      opacity: 0.5;
+      transform: translateY(2px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }
@@ -62,30 +74,11 @@ h4 {
   @apply font-title;
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px var(--dark-gray) inset !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
 button {
-  height: 40px;
-  padding: 0 12px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
   cursor: pointer;
-
-  position: relative;
 }
-
-/* button::before {
-  content: "";
-  width: 0;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: var(--primary);
-  transition: 0.4s ease;
-}
-
-button:hover::before {
-  width: 100%;
-} */

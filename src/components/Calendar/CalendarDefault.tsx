@@ -38,6 +38,7 @@ export default function CalendarDefault({
           <Calendar.Days>
             {MountCalendarDays(monthSelected).map((item, index) => (
               <Calendar.Day
+                monthSelected={month}
                 data={calendarMonthData.find((calendar) =>
                   CompareDate(
                     item.date,

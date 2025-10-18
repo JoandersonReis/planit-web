@@ -1,9 +1,11 @@
 "use client"
 
 import { useMessageContext } from "@/contexts/MessagesContext"
+import { useUserContext } from "@/contexts/UserContext"
 import { LoginSchema, TLoginSchema } from "@/schemas/LoginSchema"
 import AuthService from "@/service/Auth"
 import { SessionCookieService } from "@/service/SessionCookie"
+import { UserLocalStorage } from "@/service/UserLocalStorage"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CheckCircle, Loader2Icon } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -25,6 +27,7 @@ export default function LoginForm() {
   const sessionCookies = new SessionCookieService()
   const [isLoading, setIsLoading] = useState(false)
   const { onMessage } = useMessageContext()
+  const { onUser } = useUserContext()
 
   async function onSubmit(data: TLoginSchema) {
     setIsLoading(true)
@@ -46,7 +49,13 @@ export default function LoginForm() {
       type: "SUCCESS",
     })
 
-    await sessionCookies.create(response)
+    onUser(response.user)
+    UserLocalStorage.save(response.user)
+
+    await sessionCookies.create({
+      refreshToken: response.refreshToken,
+      accessToken: response.accessToken,
+    })
     navigation.push("/dashboard")
   }
 

@@ -24,7 +24,7 @@ export default function FormInputLabel({
 
   return (
     <div className="my-2 flex-1">
-      <div className="relative group flex items-center group-focus-within:border-primary">
+      <div className="relative group flex items-center group-focus-within:border-b-primary">
         <Form.Label
           htmlFor={label}
           required={required}

@@ -76,4 +76,10 @@ export const CONFIG = {
   COOKIES: {
     SESSION: "session",
   },
+  STORAGE: {
+    USER: "plan.it@user",
+  },
+  CACHE_KEYS: {
+    STATISTICS: "statistics",
+  },
 }

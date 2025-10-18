@@ -17,6 +17,7 @@ export type TStatisticsResponse = {
     debtsDays: TDayData[]
     debtsTotal: number
     debtsCount: number
+    debtsPaidTotal: number
   }
 }
 

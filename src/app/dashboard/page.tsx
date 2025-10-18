@@ -1,34 +1,31 @@
 "use client"
 
 import { Dashboard } from "@/components/Dashboard"
-import { StatisticsService } from "@/service/Statistics"
-import { TStatisticsResponse } from "@/service/types"
+import { useUserContext } from "@/contexts/UserContext"
+import useStatistics from "@/hooks/swr/useStatistics"
 import { MONTH_SELECT } from "@/utils/Config"
 import { ComponentProps, useEffect, useState } from "react"
 
 type Tpage = ComponentProps<"div">
 
 export default function Page({ className, ...props }: Tpage) {
+  const { debtsPaidTotal, onDebtsPaidTotal } = useUserContext()
+
   const currentDate = new Date()
   const [monthSelect, setMonthSelected] = useState<string>(
     MONTH_SELECT[currentDate.getMonth()].value
   )
-  var [statistics, setStatistics] = useState<TStatisticsResponse>()
 
-  const statisticsService = new StatisticsService()
-
-  async function loadStatistics() {
-    const response = await statisticsService.find(Number(monthSelect))
-
-    setStatistics(response)
-  }
+  const { statistics, isLoading, isError } = useStatistics({
+    month: Number(monthSelect),
+  })
 
   useEffect(() => {
-    loadStatistics()
-  }, [monthSelect])
+    if (statistics) onDebtsPaidTotal(statistics.debts.debtsPaidTotal)
+  }, [statistics])
 
   return (
-    <div className="h-[100vh] p-4 flex flex-col gap-4">
+    <div className="min-h-full p-4 flex flex-col gap-4">
       <Dashboard.CalendarCard
         month={Number(monthSelect) - 1}
         calendarDaysData={statistics?.debts.debtsDays}
@@ -37,7 +34,8 @@ export default function Page({ className, ...props }: Tpage) {
       />
 
       <Dashboard.MonthBalanceCard
-        debtsTotal={statistics?.debts.debtsTotal || 0}
+        debtsSumTotal={statistics?.debts.debtsTotal || 0}
+        debtsPaidTotal={debtsPaidTotal}
       />
 
       <Dashboard.MonthDebtsCard

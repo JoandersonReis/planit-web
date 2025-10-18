@@ -5,10 +5,12 @@ import { DayModalContent } from "."
 
 type TDayModalContentDefaultProps = {
   data: TDayData
+  monthSelected: number
 }
 
 export default function DayModalContentDefault({
   data,
+  monthSelected,
 }: TDayModalContentDefaultProps) {
   const currentDate = new Date(data.date)
 
@@ -37,6 +39,7 @@ export default function DayModalContentDefault({
           <DayModalContent.Items>
             {data.debts.map((item) => (
               <DayModalContent.Item
+                monthSelected={monthSelected}
                 debtId={item.id}
                 value={item.value}
                 paid={item.paid}

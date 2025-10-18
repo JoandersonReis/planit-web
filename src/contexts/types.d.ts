@@ -1,9 +1,13 @@
+import { TUserLogin } from "@/service/types"
+import { ReactNode } from "react"
+
 export type TUserContext = {
   balance: number
   name: string
+  onUser: (value: TUserLogin) => void
+  debtsPaidTotal: number
+  onDebtsPaidTotal: (value: number) => void
 }
-
-import { ReactNode } from "react"
 
 export type TMessageType = "WARNING" | "SUCCESS"
 

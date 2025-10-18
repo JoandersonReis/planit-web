@@ -1,6 +1,14 @@
 "use client"
 
-import { createContext, ReactNode, useContext } from "react"
+import { TUserLogin } from "@/service/types"
+import { UserLocalStorage } from "@/service/UserLocalStorage"
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 import { TUserContext } from "./types"
 
 const UserContext = createContext({} as TUserContext)
@@ -10,11 +18,25 @@ type TUserContextProps = {
 }
 
 export function UserProvider({ children }: TUserContextProps) {
+  const [user, setUser] = useState<TUserLogin>()
+  const [debtsPaidTotal, setDebtsPaidTotal] = useState(0)
+
+  useEffect(() => {
+    const user = UserLocalStorage.find()
+
+    if (user) {
+      setUser(user)
+    }
+  }, [])
+
   return (
     <UserContext.Provider
       value={{
-        name: "Joanderson Reis",
-        balance: 159385,
+        name: user?.name || "",
+        balance: Number(user?.balance) || 0,
+        onUser: setUser,
+        debtsPaidTotal,
+        onDebtsPaidTotal: setDebtsPaidTotal,
       }}
     >
       {children}
